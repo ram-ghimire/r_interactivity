@@ -1,0 +1,25 @@
+---
+title: "shiny_in_markdown"
+author: "Ram"
+date: "26/05/2020"
+output: html_document
+runtime: shiny
+---
+
+```{r,echo=FALSE,message=FALSE}
+library(shiny)
+library(tidyverse)
+
+gapminder <- read_csv("data/gapminder.csv")
+```
+
+
+```{r}
+sliderInput("bins","Number of bins in the histogram:", min = 1,max = 50,value = 30)
+renderText(input$bins)
+renderPlot({
+ ggplot(gapminder,aes(x=lifeExp))+
+    geom_histogram(bins = input$bins)
+})
+```
+
